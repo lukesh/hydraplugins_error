@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flexLibProperties version="1">
+<includeClasses>
+<classEntry path="com.hydraframework.plugins.error.ErrorManager"/>
+<classEntry path="com.hydraframework.plugins.error.descriptors.ErrorDescriptor"/>
+<classEntry path="com.hydraframework.plugins.error.descriptors.ErrorType"/>
+</includeClasses>
+<includeResources/>
+<namespaceManifests/>
+</flexLibProperties>
