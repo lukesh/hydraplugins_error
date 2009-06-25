@@ -4,6 +4,8 @@
 <classEntry path="com.hydraframework.plugins.error.ErrorManager"/>
 <classEntry path="com.hydraframework.plugins.error.descriptors.ErrorDescriptor"/>
 <classEntry path="com.hydraframework.plugins.error.descriptors.ErrorType"/>
+<classEntry path="com.hydraframework.plugins.error.descriptors.ValidationDictionary"/>
+<classEntry path="com.hydraframework.plugins.error.interfaces.IValidationDictionary"/>
 </includeClasses>
 <includeResources/>
 <namespaceManifests/>
