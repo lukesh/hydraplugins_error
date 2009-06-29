@@ -1,12 +1,12 @@
 package com.hydraframework.plugins.error.descriptors {
+	
+	import com.hydraframework.plugins.error.interfaces.IErrorDescriptor;
 	import com.hydraframework.plugins.error.interfaces.IValidationDictionary;
-
+	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
 	import flash.utils.Dictionary;
-
-	import mx.utils.ObjectUtil;
 
 	public class ValidationDictionary extends EventDispatcher implements IValidationDictionary {
 
@@ -45,6 +45,12 @@ package com.hydraframework.plugins.error.descriptors {
 			return (_errorCount == 0);
 		}
 
+		/**
+		 * Property access to errors.
+		 */
+		public function get errors():Array {
+			return this.listErrors();
+		}
 
 		//-----------------------------
 		//
@@ -71,31 +77,116 @@ package com.hydraframework.plugins.error.descriptors {
 		}
 
 		/**
+		 * Retrieves an error associated with the supplied key.
+		 *
+		 * @return IErrorDescriptor
+		 */
+		public function getError(key:Object):IErrorDescriptor {
+			if (this.hasError(key)) {
+				return IErrorDescriptor(_errors[key]);
+			} else {
+				return null;
+			}
+		}
+
+		/**
 		 * Records a new error for the supplied key.
 		 */
 		public function addError(key:Object, errorMessage:String):void {
-			_errors[key] = errorMessage;
+			_errors[key] = new ErrorDescriptor(ErrorType.VALIDATION, errorMessage);
+			_errorCount++;
+			this.dispatchEvent(new Event("errorChanged"));
+		}
+
+		/**
+		 * Adds a custom IErrorDescriptor object.
+		 */
+		public function addCustomError(key:Object, error:IErrorDescriptor):void {
+			_errors[key] = error;
 			_errorCount++;
 			this.dispatchEvent(new Event("errorChanged"));
 		}
 
 		/**
 		 * Returns an array of all the currently recorded errors.
+		 *
+		 * @return Array<IErrorDescriptors>
 		 */
 		public function listErrors():Array {
 			var result:Array = [];
 
-			for (var currentKey:Object in _errors)
-				result.push(_errors[currentKey]);
+			for each (var currentError:IErrorDescriptor in _errors)
+				result.push(currentError);
 
 			return result;
+		}
+
+		/**
+		 * Creates an array of unique error descriptors based on message.
+		 *
+		 * @return Array<IErrorDescriptor>
+		 */
+		public function listUniqueErrors():Array {
+			var result:Array = [];
+
+			for each (var currentError:IErrorDescriptor in _errors) {
+				var hasBeenFound:Boolean = false;
+
+				for each (var testError:IErrorDescriptor in result) {
+					if (testError.message == currentError.message) {
+						hasBeenFound = true;
+					}
+				}
+
+				if (!hasBeenFound) {
+					result.push(currentError);
+				}
+			}
+
+			return result;
+		}
+
+		/**
+		 * Creates an array of unique error messages.
+		 *
+		 * @return Array<String>
+		 */
+		public function listUniqueErrorMessages():Array {
+			var currentUniqueErrors:Array = this.listUniqueErrors();
+			var result:Array = [];
+
+			for each (var currentError:IErrorDescriptor in currentUniqueErrors) {
+				result.push(currentError.message);
+			}
+
+			return result;
+		}
+
+		/**
+		 * Removes any errors matching the supplied descriptor. Returns
+		 * whether there was an actual error removed.
+		 */
+		public function removeError(descriptor:IErrorDescriptor):Boolean {
+			var hasRemovedErrors:Boolean = false;
+
+			for (var currentErrorKey:Object in _errors) {
+				var currentError:IErrorDescriptor = _errors[currentErrorKey] as IErrorDescriptor;
+
+				if (currentError == descriptor) {
+					delete _errors[currentErrorKey];
+					_errorCount--;
+					this.dispatchEvent(new Event("errorChanged"));
+					hasRemovedErrors = true;
+				}
+			}
+			return !hasRemovedErrors;
 		}
 
 		/**
 		 * Removes any errors for the supplied key. Returns
 		 * whether there was an actual record removed.
 		 */
-		public function removeError(key:Object):Boolean {
+		public function removeErrorByKey(key:Object):Boolean {
 			if (!this.hasError(key)) {
 				delete _errors[key];
 				_errorCount--;
