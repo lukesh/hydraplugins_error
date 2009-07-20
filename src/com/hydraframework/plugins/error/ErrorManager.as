@@ -7,6 +7,7 @@ package com.hydraframework.plugins.error {
 	import com.hydraframework.core.mvc.events.Phase;
 	import com.hydraframework.core.mvc.patterns.plugin.Plugin;
 	import com.hydraframework.plugins.error.descriptors.ErrorDescriptor;
+	
 	import mx.collections.ArrayCollection;
 
 	public class ErrorManager extends Plugin {
@@ -36,6 +37,11 @@ package com.hydraframework.plugins.error {
 		public static function getInstance():ErrorManager {
 			return _instance;
 		}
+		
+		public static function get instance():ErrorManager {
+			return _instance;
+		}
+		
 		/**
 		 * @private
 		 */
