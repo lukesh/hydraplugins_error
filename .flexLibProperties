@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<flexLibProperties version="1">
-<includeClasses>
-<classEntry path="com.hydraframework.plugins.error.ErrorManager"/>
-<classEntry path="com.hydraframework.plugins.error.descriptors.ErrorDescriptor"/>
-<classEntry path="com.hydraframework.plugins.error.descriptors.ErrorType"/>
-<classEntry path="com.hydraframework.plugins.error.descriptors.ValidationDictionary"/>
-<classEntry path="com.hydraframework.plugins.error.interfaces.IErrorDescriptor"/>
-<classEntry path="com.hydraframework.plugins.error.interfaces.IErrorType"/>
-<classEntry path="com.hydraframework.plugins.error.interfaces.IValidationDictionary"/>
-</includeClasses>
-<includeResources/>
-<namespaceManifests/>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="false" version="1">
+  <includeClasses>
+    <classEntry path="com.hydraframework.plugins.error.ErrorManager"/>
+    <classEntry path="com.hydraframework.plugins.error.descriptors.ErrorDescriptor"/>
+    <classEntry path="com.hydraframework.plugins.error.descriptors.ErrorType"/>
+    <classEntry path="com.hydraframework.plugins.error.descriptors.ValidationDictionary"/>
+    <classEntry path="com.hydraframework.plugins.error.interfaces.IErrorDescriptor"/>
+    <classEntry path="com.hydraframework.plugins.error.interfaces.IErrorType"/>
+    <classEntry path="com.hydraframework.plugins.error.interfaces.IValidationDictionary"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
 </flexLibProperties>
